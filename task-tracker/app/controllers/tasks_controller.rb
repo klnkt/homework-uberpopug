@@ -45,14 +45,13 @@ class TasksController < ApplicationController
     end
   end
 
-  def reassign_task
-    # TODO: Add events there
-    Task.all.each { |task| assign_worker(task).save }
+  def reassign_all
+    Task.all.each { |task| reassign(task) }
   end
 
   private
 
-  def assign_worker(task)
+  def assign_random_worker(task)
     # TODO: add logic for assigning random user
     task.assignee = Account.last
     task
@@ -61,7 +60,7 @@ class TasksController < ApplicationController
   def build_task(params)
     task = Task.new(params)
 
-    task.assignee = assign_worker(task)
+    task.assignee = assign_random_worker(task)
     task.cost = rand(-20..-10)
     task.reward = rand(20..40)
 
@@ -73,7 +72,7 @@ class TasksController < ApplicationController
   end
 
   def reassign(task)
-    task = assign_worker(task)
+    task = assign_random_worker(task)
     return unless task.save
 
     Events::ProduceEvent.new(
