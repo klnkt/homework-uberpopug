@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     sessions: 'accounts/sessions'
   }
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  root to: 'accounts#index'
+
+  resources :accounts, only: [:edit, :update, :destroy]
+  get '/accounts/current', to: 'accounts#current'
 end
