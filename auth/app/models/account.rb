@@ -31,7 +31,8 @@ class Account < ApplicationRecord
         public_id: account.public_id,
         email: account.email,
         full_name: account.full_name,
-        position: account.position
+        position: account.position,
+        role: account.role
       }
     }
     Producer.call(event.to_json, topic: 'accounts-stream')
