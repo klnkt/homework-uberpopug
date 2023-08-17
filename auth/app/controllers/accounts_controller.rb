@@ -39,7 +39,7 @@ class AccountsController < ApplicationController
           }
         }
 
-        Karafka.producer.produce_sync(event.to_json, topic: 'accounts-stream')
+        Karafka.producer.produce_sync(payload: event.to_json, topic: 'accounts-stream')
         # --------------------------------------------------------------------
 
         if new_role
@@ -47,7 +47,7 @@ class AccountsController < ApplicationController
             event_name: 'AccountRoleChanged',
             data: { public_id: public_id, role: role }
           }
-          Karafka.producer.produce_sync(event.to_json, topic: 'accounts')
+          Karafka.producer.produce_sync(payload: event.to_json, topic: 'accounts-lifecycle')
         end
 
         # --------------------------------------------------------------------
@@ -74,7 +74,7 @@ class AccountsController < ApplicationController
       data: { public_id: @account.public_id }
     }
 
-    Karafka.producer.produce_sync(event.to_json, topic: 'accounts-stream')
+    Karafka.producer.produce_sync(payload: event.to_json, topic: 'accounts-stream')
     # --------------------------------------------------------------------
 
     respond_to do |format|
