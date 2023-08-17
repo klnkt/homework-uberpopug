@@ -9,11 +9,12 @@ class DeviseCreateAccounts < ActiveRecord::Migration[6.0]
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
 
-      t.uuid :public_id, default: "gen_random_uuid()", null: false
+      t.string :public_id, null: false
 
       ## Account information
       t.string   :full_name
       t.string   :position
+      t.string   :role, null: false, default: 'employee'
 
       ## Account information
       t.boolean   :active, default: true

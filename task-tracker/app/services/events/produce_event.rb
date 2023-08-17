@@ -6,7 +6,7 @@ module Events
     end
 
     def call
-      Karafka.producer.produce_sync(
+      Karafka.Karafka.producer.produce_sync(
         topic:,
         payload:
       )
