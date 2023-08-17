@@ -17,15 +17,15 @@
   </thead>
 
   <tbody>
-    <% @accounts.each do |account| %>
+    <% @tasks.each do |task| %>
       <tr>
-        <td><%= account.id %></td>
-        <td><%= account.title %></td>
-        <td><%= account.description %></td>
-        <td><%= account.assignee.full_name %></td>
-        <td><%= account.cost %></td>
-        <td><%= account.reward %></td>
-        <td><%= account.status %></td>
+        <td><%= task.id %></td>
+        <td><%= task.title %></td>
+        <td><%= task.description %></td>
+        <td><%= task.assignee.full_name %></td>
+        <td><%= task.cost %></td>
+        <td><%= task.reward %></td>
+        <td><%= task.status %></td>
         <td><%= link_to 'Complete', task_complete_path(task) %></td>
       </tr>
     <% end %>
@@ -36,4 +36,4 @@
 <br />
 <br />
 
-<%= link_to('Logout', destroy_account_session_path, method: :delete) %>   
+<%# <%= link_to('Logout', destroy_account_session_path, method: :delete) %> %>

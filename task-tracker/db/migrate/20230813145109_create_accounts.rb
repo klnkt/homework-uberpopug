@@ -6,7 +6,6 @@ class CreateAccounts < ActiveRecord::Migration[7.0]
       t.string :full_name
       t.string :position
       t.string :role
-      t.string :email
 
       t.timestamps
     end
