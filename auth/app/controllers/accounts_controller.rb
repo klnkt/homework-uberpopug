@@ -45,7 +45,7 @@ class AccountsController < ApplicationController
         if new_role
           event = {
             event_name: 'AccountRoleChanged',
-            data: { public_id: public_id, role: role }
+            data: { public_id: @account.public_id, role: @account.role }
           }
           Karafka.producer.produce_sync(payload: event.to_json, topic: 'accounts-lifecycle')
         end

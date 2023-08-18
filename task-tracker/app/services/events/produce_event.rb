@@ -1,15 +1,15 @@
 module Events
   class ProduceEvent
-    def initialize(topic:, payload:)
-      @payload = payload
-      @topic = topic
-    end
-
-    def call
-      Karafka.Karafka.producer.produce_sync(
-        topic:,
-        payload:
-      )
+    class << self
+      def call(topics:, payload:)
+        puts payload
+        topics.each do |topic|
+          Karafka.producer.produce_sync(
+            topic: topic,
+            payload: payload.to_json
+          )
+        end
+      end
     end
   end
 end

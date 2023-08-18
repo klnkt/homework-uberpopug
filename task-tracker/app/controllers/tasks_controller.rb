@@ -20,9 +20,9 @@ class TasksController < ApplicationController
     @task = build_task(task_params)
 
     if @task.save
-      Events::ProduceEvent.new(
+      Events::ProduceEvent.call(
         topics: ['tasks-lifecycle', 'tasks-stream'], # CUD + BE events topic
-        payload: Events::BuildPayload(:task_created, @task)
+        payload: Events::BuildPayload.build_payload(:task_created, @task)
       )
 
       redirect_to tasks_path, notice: 'Task was created successfully.'
@@ -35,9 +35,9 @@ class TasksController < ApplicationController
     task = Task.find(params[:id])
 
     if task.update(status: 'Completed')
-      Events::ProduceEvent.new(
+      Events::ProduceEvent.call(
         topics: ['tasks-lifecycle'], # BE events topic
-        payload: Events::BuildPayload(:task_completed, @task)
+        payload: Events::BuildPayload.build_payload(:task_completed, @task)
       )
       redirect_to tasks_path, notice: 'Task was completed successfully.'
     else
@@ -73,9 +73,9 @@ class TasksController < ApplicationController
     task.account = assign_random_worker
     return unless task.save
 
-    Events::ProduceEvent.new(
+    Events::ProduceEvent.call(
       topics: ['tasks-lifecycle'], # BE events topic
-      payload: Events::BuildPayload(:task_reassigned, task)
+      payload: Events::BuildPayload.build_payload(:task_reassigned, task)
     )
   end
 
