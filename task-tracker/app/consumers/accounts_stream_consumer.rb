@@ -1,26 +1,35 @@
 class AccountsStreamConsumer < ApplicationConsumer
   def consume
-    params_batch.each do |message|
+    messages.each do |message|
       puts '-' * 80
       p message
       puts '-' * 80
 
-      case message['event_name']
-      when 'AccountCreated'
-        Accounts::Create.call(message['data'])
-      when 'AccountUpdated'
-        Accounts::Update.call(message['data'])
-      when 'AccountDeleted'
-        Accounts::Delete.call(message['data'])
-      when 'AccountRoleChanged'
-        Accounts::UpdateRoll.call(message['data'])
-      else
-        # store events in DB
+      begin
+        payload = message.payload
+
+        puts '-' * 80
+        p payload
+        puts '-' * 80
+
+        puts
+        case payload['event_name']
+        when 'AccountCreated'
+          Accounts::Create.call(payload['data'])
+        when 'AccountUpdated'
+          Accounts::Update.call(payload['data'])
+        when 'AccountDeleted'
+          Accounts::Delete.call(payload['data'])
+        when 'AccountRoleChanged'
+          Accounts::UpdateRoll.call(payload['data'])
+        else
+          # store events in DB
+        end
+      rescue
+        puts '-' * 80
+        p 'Failed to process the event'
+        puts '-' * 80
       end
     end
-  end
-
-  def account_repo
-    Container['repositories.account']
   end
 end

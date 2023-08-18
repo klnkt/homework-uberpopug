@@ -14,25 +14,25 @@ module Events
     def task_created_payload
       {
         name: 'TaskCreated',
-        data: full_task_data
+        data: full_data
       }
     end
 
     def task_reassigned_payload
       {
         name: 'TaskReassigned',
-        data: compact_task_data
+        data: compact_data
       }
     end
 
     def task_completed_payload
       {
         name: 'TaskCompleted',
-        data: compact_task_data
+        data: compact_data
       }
     end
 
-    def full_task_data
+    def full_data
       {
         public_id: @task.public_id,
         title: @task.title,
@@ -44,11 +44,9 @@ module Events
       }
     end
 
-    def compact_task_data
+    def compact_data
       {
         public_id: @task.public_id,
-        cost: @task.cost,
-        reward: @task.reward,
         assignee_public_id: @task.assignee_public_id
       }
     end

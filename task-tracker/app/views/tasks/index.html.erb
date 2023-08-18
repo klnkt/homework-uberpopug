@@ -1,39 +1,41 @@
-<p id="notice"><%= notice %></p>
+<h1>Task List</h1>
+ <%= button_to 'New Task', new_task_path, method: :get, class: 'btn btn-success' %>
+ <br>
+ <%= button_to 'Reassign all open tasks', reassign_all_tasks_path, method: :post, class: 'btn btn-success' %>
 
-<h1>Tasks</h1>
-
-<table>
+<table class="table">
   <thead>
     <tr>
-      <th>id</th>
-      <th>title</th>
-      <th>description</th>
-      <th>assignee</th>
-      <th>cost</th>
-      <th>reward</th>
-      <th>status</th>
-      <th></th>
+      <th>ID</th>
+      <th>Public ID</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Cost</th>
+      <th>Reward</th>
+      <th>Assignee public ID</th>
+      <th>Assignee</th>
+      <th>Status</th>
+      <th>Actions</th>
     </tr>
   </thead>
-
   <tbody>
     <% @tasks.each do |task| %>
       <tr>
-        <td><%= task.id %></td>
-        <td><%= task.title %></td>
-        <td><%= task.description %></td>
-        <td><%= task.assignee.full_name %></td>
-        <td><%= task.cost %></td>
-        <td><%= task.reward %></td>
-        <td><%= task.status %></td>
-        <td><%= link_to 'Complete', task_complete_path(task) %></td>
+        <td class="table-cell"><%= task.id %></td>
+        <td class="table-cell"><%= task.public_id %></td>
+        <td class="table-cell"><%= task.title %></td>
+        <td class="table-cell"><%= task.description %></td>
+        <td class="table-cell"><%= task.cost %></td>
+        <td class="table-cell"><%= task.reward %></td>
+        <td class="table-cell"><%= task.account.public_id %></td>
+        <td class="table-cell"><%= task.account.full_name %></td>
+        <td class="table-cell"><%= task.status %></td>
+        <td class="table-cell">
+             <% if task.status == 'New' %>
+              <%= button_to 'Complete', complete_task_path(task), method: :patch, class: 'btn btn-success' %>
+            <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br />
-<br />
-<br />
-
-<%# <%= link_to('Logout', destroy_account_session_path, method: :delete) %> %>

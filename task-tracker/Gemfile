@@ -53,8 +53,9 @@ group :development do
 end
 
 
-gem "omniauth", "~> 2.1"
+gem "omniauth"
+gem "omniauth-accounts"
 
 gem "karafka", "~> 2.1"
 
-gem "waterdrop", "~> 2.6"
+gem "dotenv", "~> 2.8", :group => :development

@@ -1,5 +1,8 @@
 class Task < ApplicationRecord
-  belongs_to :account
+  belongs_to :account, foreign_key: 'account_id'
+
+  scope :open, -> { where(status: 'New') }
+  scope :completed, -> { where(status: 'Completed') }
 
   before_create :generate_uuid
 
