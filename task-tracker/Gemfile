@@ -52,10 +52,6 @@ group :development do
   # gem "spring"
 end
 
-
-gem "omniauth"
-gem "omniauth-accounts"
-
 gem "karafka", "~> 2.1"
 
 gem "dotenv", "~> 2.8", :group => :development
