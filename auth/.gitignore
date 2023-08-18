@@ -12,7 +12,7 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
-/db/*
+/db/development.sqlite3
 /tmp/*
 
 
