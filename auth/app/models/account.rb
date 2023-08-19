@@ -21,6 +21,8 @@ class Account < ApplicationRecord
     employee: 'employee'
   }
 
+  before_create :generate_public_id
+
   after_create do
     account = self
 
@@ -31,11 +33,17 @@ class Account < ApplicationRecord
         public_id: account.public_id,
         email: account.email,
         full_name: account.full_name,
-        position: account.position,
-        role: account.role
+        position: account.position
       }
     }
-    Producer.call(event.to_json, topic: 'accounts-stream')
+
+    Karafka.producer.produce_sync(payload: event.to_json, topic: 'accounts-stream')
     # --------------------------------------------------------------------
+  end
+
+  private
+
+  def generate_public_id
+    self.public_id = SecureRandom.uuid
   end
 end
