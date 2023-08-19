@@ -3,6 +3,10 @@ class Transaction < ApplicationRecord
 
   after_update :update_balance, if: :saved_change_to_status?
 
+  def task
+    ask.find_by(public_id: task_public_id)
+  end
+
   private
 
   def update_balance
