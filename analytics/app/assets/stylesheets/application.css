@@ -1,0 +1,22 @@
+.btn-sm {
+    font-size: 0.8rem;
+  }
+
+  .table {
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    margin-left: 0;
+    border-collapse: collapse;
+  }
+
+  .table-cell {
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 5px;
+    margin: 5px;
+    text-align: center;
+    border: 1px solid lightgrey;
+  }
