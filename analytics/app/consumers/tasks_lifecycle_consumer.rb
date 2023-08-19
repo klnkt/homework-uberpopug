@@ -31,14 +31,8 @@ class AccountsStreamConsumer < ApplicationConsumer
   private
 
   def process_acount_events(payload)
-    case payload['event_name']
-    when 'TaskCreated'
-      Task::Create.call(payload['data'])
-    when 'TaskCompleted'
+    if payload['event_name'] == 'TaskCompleted'
       Task::CreateAuditLog.call(payload['data'])
-      Task::Update.call(payload['data'])
-    when 'TaskReassigned'
-      Task::Update.call(payload['data'])
     else
       # TODO: store invalid events in DB for later processing
     end

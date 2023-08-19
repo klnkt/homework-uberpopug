@@ -1,14 +1,14 @@
 class CreateTasks < ActiveRecord::Migration[7.0]
   def change
     create_table :tasks do |t|
-      t.public_id :string
-      t.jira_id :string
-      t.title :string
-      t.description :string
-      t.cost :integer
-      t.reward :integer
+      t.string :public_id
+      t.string :jira_id
+      t.string :title
+      t.string :description
+      t.integer :cost
+      t.integer :reward
 
-      t.assignee_public_id :string
+      t.string :assignee_public_id
 
       t.timestamps
     end
