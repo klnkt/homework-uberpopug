@@ -1,50 +1,33 @@
 module Events
   class BuildPayload
     class << self
-      def build_payload(event_type, task)
-        @task = task
-        send("#{event_type}_payload")
+      def build_payload(event_type, payload)
+        @account_balance = payload
+        send("build_#{event_type}")
       end
 
       private
 
-      def task_created_payload
+      def build_account_balance_updated
+        payload = {
+          event_name: 'AccountBalanceUpdated',
+          data: {
+            account_public_id: @account_balance.account.public_id,
+            amount: @account_balance.balance
+          }
+        }
         {
-          name: 'TaskCreated',
-          data: full_data
+          event_type: 'account_balance.updated',
+          event_version: 1,
+          payload: metadata.merge(payload)
         }
       end
 
-      def task_reassigned_payload
+      def metadata
         {
-          name: 'TaskReassigned',
-          data: compact_data
-        }
-      end
-
-      def task_completed_payload
-        {
-          name: 'TaskCompleted',
-          data: compact_data
-        }
-      end
-
-      def full_data
-        {
-          public_id: @task.public_id,
-          title: @task.title,
-          description: @task.description,
-          cost: @task.cost,
-          reward: @task.reward,
-          assignee_public_id: @task.account.public_id,
-          status: @task.status
-        }
-      end
-
-      def compact_data
-        {
-          public_id: @task.public_id,
-          assignee_public_id: @task.account.public_id
+          event_id: SecureRandom.uuid,
+          event_time: Time.now.to_s,
+          producer: 'accounting_service '
         }
       end
     end

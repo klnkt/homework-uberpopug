@@ -3,29 +3,52 @@ module Events
     class << self
       def build_payload(event_type, task)
         @task = task
-        send("#{event_type}_payload")
+        send("build_#{event_type}")
       end
 
       private
 
-      def task_created_payload
-        {
-          name: 'TaskCreated',
+      def build_task_created
+        payload = {
+          event_name: 'TaskCreated',
           data: full_data
         }
-      end
-
-      def task_reassigned_payload
         {
-          name: 'TaskReassigned',
-          data: compact_data
+          event_type: 'tasks.created',
+          event_version: 1,
+          payload: metadata.merge(payload)
         }
       end
 
-      def task_completed_payload
-        {
-          name: 'TaskCompleted',
+      def build_task_reassigned
+        payload = {
+          event_name: 'TaskReassigned',
           data: compact_data
+        }
+        {
+          event_type: 'tasks.reassigned',
+          event_version: 1,
+          payload: metadata.merge(payload)
+        }
+      end
+
+      def build_task_completed
+        payload = {
+          event_name: 'TaskCompleted',
+          data: compact_data
+        }
+        {
+          event_type: 'tasks.completed',
+          event_version: 1,
+          payload: metadata.merge(payload)
+        }
+      end
+
+      def metadata
+        {
+          event_id: SecureRandom.uuid,
+          event_time: Time.now.to_s,
+          producer: 'task_tracker_service '
         }
       end
 

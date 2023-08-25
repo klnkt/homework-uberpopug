@@ -44,5 +44,13 @@ class KarafkaApp < Karafka::App
     topic :'accounts-stream' do
       consumer AccountsStreamConsumer
     end
+
+    topic :'balance-stream' do
+      consumer BalanceStreamConsumer
+    end
+
+    topic :'task-lifecycle' do
+      consumer TasksLifecycleConsumer
+    end
   end
 end

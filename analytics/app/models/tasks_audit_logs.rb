@@ -1,0 +1,2 @@
+class TaskAuditLog < ApplicationRecord
+end

@@ -1,0 +1,30 @@
+<h1>Dashboard</h1>
+
+<div class="number-block">
+  <h2>Profit today</h2>
+  <p><%= number_to_currency(@profit) %></p>
+</div>
+
+<div class="number-block">
+  <h2>Parrots in the negative</h2>
+  <p><%= number_to_currency(@parrots_negative) %></p>
+</div>
+
+<h1>Most expensive tasks per day</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Cost</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @aggregations.each do |row| %>
+      <tr>
+        <td class="table-cell"><%= row[:created_at.to_date] %></td>
+        <td class="table-cell"><%= number_to_currency(row[:cost]) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

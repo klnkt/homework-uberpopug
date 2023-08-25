@@ -32,6 +32,7 @@ gem "bootsnap", require: false
 
 # Events
 gem 'karafka'
+gem 'schema_registry', path: '../event_schema_registry/ruby/'
 
 gem 'devise'
 gem 'doorkeeper'

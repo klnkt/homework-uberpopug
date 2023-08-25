@@ -53,5 +53,6 @@ group :development do
 end
 
 gem "karafka", "~> 2.1"
+gem 'schema_registry', path: '../event_schema_registry/ruby/'
 
 gem "dotenv", "~> 2.8", :group => :development
